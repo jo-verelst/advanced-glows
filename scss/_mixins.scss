@@ -1,0 +1,8 @@
+@mixin generate-pseudo() {
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: ' ';
+  position: absolute;
+  z-index: 0;
+}

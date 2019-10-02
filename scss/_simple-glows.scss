@@ -1,0 +1,29 @@
+@import 'variables';
+@import 'mixins';
+
+@mixin generate-glow($offsets, $color1, $color2, $color3) {
+
+  $x: map-get($offsets,x);
+  $y: map-get($offsets,y);
+
+  &:before {
+    @include generate-pseudo();
+
+    background:
+    radial-gradient(circle at $x $y, rgba($color1, $default-opacity), transparent 20%),
+    radial-gradient(circle at $x $y, rgba($color2, $default-opacity), transparent 25%),
+    radial-gradient(circle at $x $y, rgba($color3, $default-opacity), transparent 30%);
+
+    -webkit-mask: radial-gradient( circle at $x $y, black 0%, transparent 25%);
+  }
+}
+
+.glow-blue {
+ @include generate-glow(map-get($offsets,left-center), blue, blue, purple); 
+}
+.glow-yellow {
+  @include generate-glow(map-get($offsets,right-center), orange, yellow, yellow); 
+}
+.glow-green {
+  @include generate-glow(map-get($offsets,top-center), aquamarine, aquamarine, aquamarine); 
+}

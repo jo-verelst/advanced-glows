@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .snap {
+        -webkit-scroll-snap-align: center;
+        scroll-snap-align: center;
+        display: inline-block;
+        height: 83vh;
+        border-radius: 3px;
+        font-size: 0;
+        margin-right: 3rem;
+        background: tomato;
+        min-width: 400px;
+      }
+      .container {
+        border: 1px solid lightgray;
+        padding: 1rem;
+        display: flex;
+        overflow-x: scroll;
+        scroll-padding: 0 50%;
+        scroll-snap-type: x mandatory;
+        -webkit-scroll-padding: 0 50%;
+        -webkit-scroll-snap-type: x mandatory;
+      }  
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+      <div class="snap">test</div>
+    </div>
+  </body>
+</html>

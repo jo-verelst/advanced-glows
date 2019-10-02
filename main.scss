@@ -1,0 +1,135 @@
+@import 'node_modules/mathsass/dist/math';
+
+@import './scss/mixins';
+@import './scss/variables';
+@import './scss/_fonts.scss';
+@import './scss/simple-glows';
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  font-family: centrale_sans_book;
+  background-color: #000;
+}
+h1 {
+  font-family: centrale_sans_xbold;
+  font-size: 52px;
+  margin-bottom: 20px;
+}
+section {
+  // border: 1px solid #FFF;
+  margin: 0 auto;
+  width: 1280px;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 $section-padding;
+  // border-bottom: 1px solid white;
+}
+[class^='glow'] {
+  color: #FFF;
+  background-color: black;
+  position: relative;
+
+  & > * {
+    z-index: 1;
+  }
+
+  .image {
+
+      width: 30%;
+      display: flex;
+      justify-content: center;
+
+      img, svg {
+        width: 200px;
+      }
+  }
+
+  .text {
+    width: 60%;
+    padding-left: 5%;
+  }
+}
+
+@mixin generate-linear-glow($offsets, $color1, $color2) {
+
+  $x: map-get($offsets,x);
+  $y: map-get($offsets,y);
+
+  &:before {
+
+    @include generate-pseudo();
+
+    $gradient-size: 25%;
+    $rotation: 125deg;
+    $diff: (50 - $x) * sin($rotation);
+    $calc: 50 - $diff;
+    $middle: $calc;
+
+    $gradient-start: $middle - ($gradient-size/2);
+    $gradient-end: $middle + ($gradient-size/2);
+
+    // @debug $gradient-start $middle $gradient-end;
+
+    background:
+      // debugging the middle for later optimization
+      // linear-gradient(
+      //   $rotation,
+      //   rgba($color1, 1) $middle,
+      //   rgba($color2, 1) $middle,
+      // );
+
+      linear-gradient(
+        $rotation,
+        rgba($color1, 1) $gradient-start,
+        rgba($color2, 1) $gradient-end
+      );
+
+      -webkit-mask: radial-gradient(circle at $x $y, black 0%, transparent $gradient-size);
+
+      // $recalc: abs((($gradient-size / 2) / $x)*100%);
+      // @debug $recalc $x;
+      // $gradient-size: $recalc;
+      // debugging the webkit mask
+      // -webkit-mask: radial-gradient(circle at $x $y, black 0%, black $gradient-size, transparent $gradient-size);
+  }
+  
+  // debugging crosshair
+  // &:after {
+
+  //   $crosshair-color: invert(mix($color1, $color2));
+
+  //   content: ' ';
+  //   width: 40px;
+  //   height: 40px;
+  //   border-left: 1px solid $crosshair-color;
+  //   border-top: 1px solid $crosshair-color;
+  //   position: absolute;
+  //   top: $y;
+  //   left: $x;
+  // }
+}
+
+.glow-linear-1 {
+  //@include generate-linear-glow((x: 50%, y: 50% ), cyan, DeepPink);
+  @include generate-linear-glow(map-get($offsets, left-center), cyan, DeepPink);
+}
+.glow-linear-2 {
+  @include generate-linear-glow(map-get($offsets, right-center), aquamarine, orange);
+}
+.glow-linear-3 {
+  @include generate-linear-glow(map-get($offsets, center-center), purple, lightblue)
+}
+.glow-linear-4 {
+  @include generate-glow(map-get($offsets,right-center), rgba(173, 0, 72, 1), red, red); 
+}
+.glow-linear-5 {
+  @include generate-glow(map-get($offsets,right-center), aqua, aqua, aqua); 
+}
